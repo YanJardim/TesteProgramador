@@ -116,7 +116,7 @@ public class Ranking
 
 
     /// <summary>
-    /// Retorna uma lista de scores do arquivo do rankings.sr
+    /// Retorna uma lista de scores do arquivo rankings.sr
     /// </summary>
     /// <returns></returns>
     public static List<SerializableScore> GetRankings()
@@ -145,7 +145,7 @@ public class Ranking
 
     public static string GetRankingPath()
     {
-        //Retorna o caminho do arquivo Ranking
+        //Retorna o caminho do arquivo rankings.sr
         return Path.Combine(Application.persistentDataPath, RankingPath);
     }
 

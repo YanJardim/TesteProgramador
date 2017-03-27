@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MetalCat : Enemy
+public class MetalCatBehaviour : Enemy
 {
     public override void OnAttack()
     {

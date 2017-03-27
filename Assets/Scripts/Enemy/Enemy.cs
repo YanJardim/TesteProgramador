@@ -70,14 +70,13 @@ public abstract class Enemy : MonoBehaviour
 
     protected IEnumerator TriggerAttack()
     {
-        Debug.Log("Na corrotina");
         yield return new WaitForSeconds(0.5f);
 
-        Debug.Log("Distance: " + GetDistanceToPlayer());
+
         if (CurrentState == STATE.IDLE && GetDistanceToPlayer() > 2)
         {
             int rand = Random.Range(0, 100);
-            Debug.Log("Rand: " + rand);
+
             if (rand <= attackChance)
             {
                 Debug.Log("Troca de estado para Attack   " + rand);
@@ -97,7 +96,8 @@ public abstract class Enemy : MonoBehaviour
 
     public bool DestroyEnemy()
     {
-        if (transform.position.x < -8)
+        //if (transform.position.x < -8)
+        if (ScreenUtil.CheckIfIsOnLeftOfTheCamera(transform.position))
         {
             Destroy(this.gameObject);
             return true;

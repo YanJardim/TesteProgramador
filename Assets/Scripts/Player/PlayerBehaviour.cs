@@ -8,6 +8,9 @@ public class PlayerBehaviour : MonoBehaviour
 
     public float speed;
     public bool dragging;
+
+    public GameObject bullet;
+
     // Use this for initialization
     void Start()
     {
@@ -26,6 +29,14 @@ public class PlayerBehaviour : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         rb.MovePosition((Vector2)transform.position + (new Vector2(h, v) * Time.deltaTime * speed));
+    }
+
+    private void Shoot()
+    {
+        if (Input.GetAxis("Fire1") > 0)
+        {
+
+        }
     }
 
 
