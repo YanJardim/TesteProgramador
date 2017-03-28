@@ -118,7 +118,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  fireRatio: 0.2
   dragging: 0
+  canShoot: 0
+  bullet: {fileID: 1582746940190200, guid: 7c39cc1b9c431494e958ae22f093582f, type: 2}
 --- !u!212 &212147259651141452
 SpriteRenderer:
   m_ObjectHideFlags: 1
