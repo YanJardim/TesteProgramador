@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnManager : Singleton<SpawnManager>
 {
@@ -15,7 +16,9 @@ public class SpawnManager : Singleton<SpawnManager>
     private float startSpawnTime;
     private float timer;
 
+    public Text spawnLevelText;
 
+    private const string spawnLevelConstString = "Level: ";
 
     // Use this for initialization
     void Start()
@@ -67,8 +70,12 @@ public class SpawnManager : Singleton<SpawnManager>
         bool can = newSpawnLevel > spawnLevel ? true : false;
         if (can)
         {
+
             spawnLevel = newSpawnLevel > spawnLevel ? newSpawnLevel : spawnLevel;
             spawnTime = startSpawnTime - (reduceSpawntimeAmount * spawnLevel);
+            spawnTime = Mathf.Clamp(spawnTime, 0.5f, Mathf.Infinity);
+
+            spawnLevelText.text = spawnLevelConstString + spawnLevel;
             return true;
         }
 

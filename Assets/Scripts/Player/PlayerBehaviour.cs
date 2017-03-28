@@ -54,6 +54,4 @@ public class PlayerBehaviour : MonoBehaviour
 
         canShoot = true;
     }
-
-
 }
