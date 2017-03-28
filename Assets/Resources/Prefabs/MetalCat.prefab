@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4635240590382066}
   - component: {fileID: 212048571553595416}
   - component: {fileID: 61125712264373410}
-  - component: {fileID: 114020451832919842}
   - component: {fileID: 50978137422686748}
+  - component: {fileID: 114020451832919842}
   m_Layer: 0
   m_Name: MetalCat
   m_TagString: Enemy
@@ -88,9 +88,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40286f9fd0078b4ca0dbc90aba80129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 2
-  attackChance: 20
-  speed: 5
+  hp: 3
+  points: 100
+  attackChance: 80
+  speed: 2
 --- !u!212 &212048571553595416
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -78,19 +78,22 @@ public abstract class Enemy : MonoBehaviour
     /// </summary>
     protected void ExecuteFSM()
     {
-        switch (CurrentState)
+        if (GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
         {
-            case STATE.ATTACK:
-                OnAttack();
-                break;
-            case STATE.IDLE:
+            switch (CurrentState)
+            {
+                case STATE.ATTACK:
+                    OnAttack();
+                    break;
+                case STATE.IDLE:
 
-                OnIdle();
+                    OnIdle();
 
-                break;
-            case STATE.TRIGGER:
-                OnTrigger();
-                break;
+                    break;
+                case STATE.TRIGGER:
+                    OnTrigger();
+                    break;
+            }
         }
     }
 
@@ -152,6 +155,7 @@ public abstract class Enemy : MonoBehaviour
     /// <returns></returns>
     public bool DestroyEnemy()
     {
+
         //Verifica se o inimigo está do lado esquerdo da camera (fora da tela)
         if (ScreenUtils.IsOnLeftOfTheCamera(transform.position))
         {

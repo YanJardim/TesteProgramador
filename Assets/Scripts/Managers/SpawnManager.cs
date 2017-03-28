@@ -30,10 +30,9 @@ public class SpawnManager : Singleton<SpawnManager>
     // Update is called once per frame
     void Update()
     {
-        if (CanReduceSpawnRatio())
-        {
-            Debug.Log("Mudou");
-        }
+        if (GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
+            ReduceSpawnRatio();
+
     }
 
     public void SpawnEnemy()
@@ -62,7 +61,7 @@ public class SpawnManager : Singleton<SpawnManager>
         StartCoroutine(SpawnRepeting());
     }
 
-    public bool CanReduceSpawnRatio()
+    public void ReduceSpawnRatio()
     {
         int score = GameManager.Instance.score;
         int newSpawnLevel = score / reduceSpawntimeFactor;
@@ -76,13 +75,8 @@ public class SpawnManager : Singleton<SpawnManager>
             spawnTime = Mathf.Clamp(spawnTime, 0.5f, Mathf.Infinity);
 
             spawnLevelText.text = spawnLevelConstString + spawnLevel;
-            return true;
+
         }
-
-        return false;
-
-
-
 
     }
 

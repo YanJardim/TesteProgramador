@@ -19,6 +19,7 @@ public class BulletBehaviour : MonoBehaviour
     void Update()
     {
         CheckIfCanDestroy();
+
     }
 
     private bool CheckIfCanDestroy()

@@ -5,18 +5,22 @@ using UnityEngine.UI;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    private int invTimesMax, invTimes;
+
     private Rigidbody2D rb;
+    private Transform Gun { get; set; }
+    private Bounds backgroundBounds, playerBounds;
+    private Vector2 playerSize;
 
     public float speed, fireRatio;
-    public bool dragging, canShoot;
-
-    public GameObject bullet;
-
-    private Transform Gun { get; set; }
-
+    public bool dragging, canShoot, invulnerability;
     public int maxHp, hp;
 
+    public GameObject bullet, background;
     public Text hpText;
+
+
+
 
 
     // Use this for initialization
@@ -26,16 +30,35 @@ public class PlayerBehaviour : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         canShoot = true;
         hp = maxHp;
+        invTimesMax = 3;
+        invTimes = 0;
+        invulnerability = false;
+
+        backgroundBounds = background.GetComponent<SpriteRenderer>().bounds;
+        playerBounds = GetComponent<SpriteRenderer>().bounds;
+        playerSize = new Vector2(playerBounds.max.x - playerBounds.min.x, playerBounds.max.y - playerBounds.min.y);
+
+    }
+
+    private void Update()
+    {
+        if (GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
+        {
+            LimitPlayerOnBackground();
+            Shoot();
+            hpText.text = "x " + hp;
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Move();
-        TouchMove();
-        Shoot();
 
-        hpText.text = "x " + hp;
+        if (GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
+        {
+            Move();
+            TouchMove();
+        }
 
     }
 
@@ -48,6 +71,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Move()
     {
+        //TODO: Verificar se tem algum joystick conectado antes de movimentar
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         rb.MovePosition((Vector2)transform.position + (new Vector2(h, v) * Time.deltaTime * speed));
@@ -75,6 +99,7 @@ public class PlayerBehaviour : MonoBehaviour
             }
             if (Input.GetTouch(0).phase == TouchPhase.Moved && dragging)
             {
+                //TODO: Mudar essa linha para funcionar com rigidbody
                 transform.position = touchPos;
             }
 
@@ -100,5 +125,61 @@ public class PlayerBehaviour : MonoBehaviour
         yield return new WaitForSeconds(fireRatio);
 
         canShoot = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Enemy" && !invulnerability && GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
+        {
+            SubHp(1);
+            invulnerability = true;
+            StartCoroutine(InvulnerabilityCoroutine());
+        }
+    }
+
+    private IEnumerator InvulnerabilityCoroutine()
+    {
+        if (invTimes <= invTimesMax)
+        {
+
+            SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+
+            Color oldColor = renderer.color;
+            Color newColor = oldColor;
+            newColor.a = 0;
+            renderer.color = newColor;
+
+            yield return new WaitForSeconds(0.1f);
+
+            renderer.color = oldColor;
+
+            yield return new WaitForSeconds(0.1f);
+            invTimes++;
+            StartCoroutine(InvulnerabilityCoroutine());
+
+        }
+        else
+        {
+            invTimes = 0;
+            invulnerability = false;
+        }
+
+    }
+
+    public bool IsDead()
+    {
+        return hp <= 0;
+    }
+
+    public void LimitPlayerOnBackground()
+    {
+        Vector2 playerPos = transform.position;
+
+        playerPos.x = Mathf.Clamp(playerPos.x, backgroundBounds.min.x + playerSize.x / 2, backgroundBounds.max.x - playerSize.x / 2);
+
+        playerPos.y = Mathf.Clamp(playerPos.y, backgroundBounds.min.y + playerSize.y / 2, backgroundBounds.max.y - playerSize.y / 2);
+
+        transform.position = playerPos;
+
     }
 }
