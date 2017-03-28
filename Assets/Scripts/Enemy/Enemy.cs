@@ -97,7 +97,7 @@ public abstract class Enemy : MonoBehaviour
     public bool DestroyEnemy()
     {
         //if (transform.position.x < -8)
-        if (ScreenUtil.CheckIfIsOnLeftOfTheCamera(transform.position))
+        if (ScreenUtils.CheckIfIsOnLeftOfTheCamera(transform.position))
         {
             Destroy(this.gameObject);
             return true;

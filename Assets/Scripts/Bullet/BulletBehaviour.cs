@@ -24,7 +24,7 @@ public class BulletBehaviour : MonoBehaviour
     private bool CheckIfCanDestroy()
     {
 
-        if (!ScreenUtil.CheckIfIsOnScreen(transform.position))
+        if (!ScreenUtils.CheckIfIsOnScreen(transform.position))
         {
             Destroy(this.gameObject);
             return true;

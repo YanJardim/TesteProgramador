@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class ScreenUtil
+public class ScreenUtils
 {
 
     public static bool CheckIfIsOnScreen(Vector2 position)
