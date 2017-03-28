@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnManager : Singleton<SpawnManager>
 {
     public int spawnTime;
-    public List<GameObject> enemysToSpawn = new List<GameObject>();
+    public List<GameObject> enemiesToSpawn = new List<GameObject>();
 
     public int SpawnFactor { get; set; }
 
@@ -28,13 +28,13 @@ public class SpawnManager : Singleton<SpawnManager>
 
     public void SpawnEnemy()
     {
-        int rand = Random.Range(0, enemysToSpawn.Count);
+        int rand = Random.Range(0, enemiesToSpawn.Count);
         Vector2 worldBoundPosX = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.width));
         Vector2 worldBoundPosY = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height));
         Vector2 spawnPos = new Vector2(worldBoundPosX.y,
                                       Random.Range(worldBoundPosY.x + 2, worldBoundPosY.y - 2));
 
-        Instantiate(enemysToSpawn[rand], spawnPos, enemysToSpawn[rand].transform.rotation);
+        Instantiate(enemiesToSpawn[rand], spawnPos, enemiesToSpawn[rand].transform.rotation);
 
     }
 
@@ -49,7 +49,7 @@ public class SpawnManager : Singleton<SpawnManager>
 
     public bool CanReduceSpawnRatio()
     {
-        int score = GameManager.instance.Score;
+        int score = GameManager.Instance.score;
         score /= 500;
         bool result = score % 1 == 0;
         if (result)

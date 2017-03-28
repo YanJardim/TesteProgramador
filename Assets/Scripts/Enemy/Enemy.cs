@@ -153,7 +153,7 @@ public abstract class Enemy : MonoBehaviour
     public bool DestroyEnemy()
     {
         //Verifica se o inimigo está do lado esquerdo da camera (fora da tela)
-        if (ScreenUtils.CheckIfIsOnLeftOfTheCamera(transform.position))
+        if (ScreenUtils.IsOnLeftOfTheCamera(transform.position))
         {
             //Destroi o inimigo e retorna true
             Destroy(this.gameObject);

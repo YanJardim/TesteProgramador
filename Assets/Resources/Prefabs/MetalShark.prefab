@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212313161263196818}
   - component: {fileID: 61054559274467774}
   - component: {fileID: 50846888353032022}
+  - component: {fileID: 114878330074911488}
   m_Layer: 0
   m_Name: MetalShark
   m_TagString: Untagged
@@ -76,6 +77,21 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.06}
   serializedVersion: 2
   m_Size: {x: 1.04, y: 0.87}
+--- !u!114 &114878330074911488
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1649289662837544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e4610b6b9336843bd1ca5ce5396146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 2
+  points: 10
+  attackChance: 50
+  speed: 2
 --- !u!212 &212313161263196818
 SpriteRenderer:
   m_ObjectHideFlags: 1

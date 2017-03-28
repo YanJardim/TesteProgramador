@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212475757547813016}
   - component: {fileID: 61643777658639364}
   - component: {fileID: 50960288769443274}
+  - component: {fileID: 114185904485608684}
   m_Layer: 0
   m_Name: MetalDog
   m_TagString: Untagged
@@ -76,6 +77,21 @@ BoxCollider2D:
   m_Offset: {x: -0.04, y: 0.09}
   serializedVersion: 2
   m_Size: {x: 0.81, y: 0.82}
+--- !u!114 &114185904485608684
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1702169418845154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311166c953935144487c49a5741decd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 5
+  points: 50
+  attackChance: 0
+  speed: 3
 --- !u!212 &212475757547813016
 SpriteRenderer:
   m_ObjectHideFlags: 1

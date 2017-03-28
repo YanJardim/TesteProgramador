@@ -301,7 +301,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnTime: 2
   enemysToSpawn:
-  - {fileID: 961140949}
+  - {fileID: 1967323467123686, guid: 7c20db7235e421e4585569955cb38cba, type: 2}
+  - {fileID: 1702169418845154, guid: 97513b9d9c5f1144baf9f1e5165fff70, type: 2}
+  - {fileID: 1649289662837544, guid: 4050b18c66af02041b39c82b66c68335, type: 2}
 --- !u!1 &419411261
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,11 +440,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &961140949 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1967323467123686, guid: 7c20db7235e421e4585569955cb38cba,
-    type: 2}
-  m_PrefabInternal: {fileID: 1286883336}
 --- !u!1 &1205998821
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,6 +658,10 @@ Prefab:
     - target: {fileID: 4635240590382066, guid: 7c20db7235e421e4585569955cb38cba, type: 2}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1967323467123686, guid: 7c20db7235e421e4585569955cb38cba, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7c20db7235e421e4585569955cb38cba, type: 2}

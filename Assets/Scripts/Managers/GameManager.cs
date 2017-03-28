@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager>
     private const string constScoreText = "Score: ";
 
     //Variavel para guardar o score da sessão atual
-    public int Score { get; set; }
+    public int score;
 
 
 
@@ -19,13 +19,13 @@ public class GameManager : Singleton<GameManager>
     // Use this for initialization
     void Start()
     {
-
+        score = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = constScoreText + Score;
+        scoreText.text = constScoreText + score;
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public class GameManager : Singleton<GameManager>
     /// <param name="amount"></param>
     public void AddScore(int amount)
     {
-        Score += amount;
+        score += amount;
     }
 
 
