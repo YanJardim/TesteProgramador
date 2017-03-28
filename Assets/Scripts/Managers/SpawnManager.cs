@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class SpawnManager : Singleton<SpawnManager>
 {
-    public int spawnTime;
+
     public List<GameObject> enemiesToSpawn = new List<GameObject>();
 
-    public int SpawnFactor { get; set; }
+    public float spawnTime;
+    public int spawnLevel;
+    public int reduceSpawntimeFactor;
+    public float reduceSpawntimeAmount;
 
+    private float startSpawnTime;
     private float timer;
+
+
 
     // Use this for initialization
     void Start()
     {
         StartCoroutine(SpawnRepeting());
+        startSpawnTime = spawnTime;
     }
 
     // Update is called once per frame
@@ -22,17 +29,20 @@ public class SpawnManager : Singleton<SpawnManager>
     {
         if (CanReduceSpawnRatio())
         {
-
+            Debug.Log("Mudou");
         }
     }
 
     public void SpawnEnemy()
     {
+
         int rand = Random.Range(0, enemiesToSpawn.Count);
         Vector2 worldBoundPosX = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.width));
         Vector2 worldBoundPosY = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height));
         Vector2 spawnPos = new Vector2(worldBoundPosX.y,
                                       Random.Range(worldBoundPosY.x + 2, worldBoundPosY.y - 2));
+
+
 
         Instantiate(enemiesToSpawn[rand], spawnPos, enemiesToSpawn[rand].transform.rotation);
 
@@ -42,7 +52,9 @@ public class SpawnManager : Singleton<SpawnManager>
     {
         yield return new WaitForSeconds(spawnTime);
 
-        SpawnEnemy();
+        if (enemiesToSpawn.Count > 0)
+            SpawnEnemy();
+        else Debug.LogWarning("enemiesToSpawn is empty");
 
         StartCoroutine(SpawnRepeting());
     }
@@ -50,14 +62,21 @@ public class SpawnManager : Singleton<SpawnManager>
     public bool CanReduceSpawnRatio()
     {
         int score = GameManager.Instance.score;
-        score /= 500;
-        bool result = score % 1 == 0;
-        if (result)
+        int newSpawnLevel = score / reduceSpawntimeFactor;
+
+        bool can = newSpawnLevel > spawnLevel ? true : false;
+        if (can)
         {
+            spawnLevel = newSpawnLevel > spawnLevel ? newSpawnLevel : spawnLevel;
+            spawnTime = startSpawnTime - (reduceSpawntimeAmount * spawnLevel);
             return true;
         }
 
         return false;
+
+
+
+
     }
 
 

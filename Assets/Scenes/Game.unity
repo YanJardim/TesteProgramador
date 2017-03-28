@@ -274,6 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85eb6a8e21d9db41bdb50fa4803cf5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
   scoreText: {fileID: 419411263}
 --- !u!4 &269504265
 Transform:
@@ -299,11 +300,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb72f8fa1140b45b0351d41c1fc760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTime: 2
-  enemysToSpawn:
+  enemiesToSpawn:
+  - {fileID: 1649289662837544, guid: 4050b18c66af02041b39c82b66c68335, type: 2}
   - {fileID: 1967323467123686, guid: 7c20db7235e421e4585569955cb38cba, type: 2}
   - {fileID: 1702169418845154, guid: 97513b9d9c5f1144baf9f1e5165fff70, type: 2}
-  - {fileID: 1649289662837544, guid: 4050b18c66af02041b39c82b66c68335, type: 2}
+  spawnTime: 2
+  spawnLevel: 1
+  reduceSpawntimeFactor: 500
+  reduceSpawntimeAmount: 0.15
 --- !u!1 &419411261
 GameObject:
   m_ObjectHideFlags: 0
