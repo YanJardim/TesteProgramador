@@ -7,6 +7,10 @@ public class SpawnManager : Singleton<SpawnManager>
     public int spawnTime;
     public List<GameObject> enemysToSpawn = new List<GameObject>();
 
+    public int SpawnFactor { get; set; }
+
+    private float timer;
+
     // Use this for initialization
     void Start()
     {
@@ -16,7 +20,10 @@ public class SpawnManager : Singleton<SpawnManager>
     // Update is called once per frame
     void Update()
     {
+        if (CanReduceSpawnRatio())
+        {
 
+        }
     }
 
     public void SpawnEnemy()
@@ -27,7 +34,7 @@ public class SpawnManager : Singleton<SpawnManager>
         Vector2 spawnPos = new Vector2(worldBoundPosX.y,
                                       Random.Range(worldBoundPosY.x + 2, worldBoundPosY.y - 2));
 
-        GameObject newEnemy = Instantiate(enemysToSpawn[rand], spawnPos, enemysToSpawn[rand].transform.rotation);
+        Instantiate(enemysToSpawn[rand], spawnPos, enemysToSpawn[rand].transform.rotation);
 
     }
 
@@ -38,6 +45,19 @@ public class SpawnManager : Singleton<SpawnManager>
         SpawnEnemy();
 
         StartCoroutine(SpawnRepeting());
+    }
+
+    public bool CanReduceSpawnRatio()
+    {
+        int score = GameManager.instance.Score;
+        score /= 500;
+        bool result = score % 1 == 0;
+        if (result)
+        {
+            return true;
+        }
+
+        return false;
     }
 
 

@@ -3,15 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MetalCatBehaviour : Enemy
+public class MetalSharkBehaviour : Enemy
 {
     public override void OnAttack()
     {
-        /*Vector3 movePosition = transform.position;
-        movePosition = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
-        Rb.MovePosition(movePosition);*/
-        OnIdle();
-
+        Rb.MovePosition((Vector2)transform.position + new Vector2(-speed * Time.deltaTime, 0));
     }
 
     public override void OnIdle()
@@ -21,11 +17,11 @@ public class MetalCatBehaviour : Enemy
 
     public override void OnTrigger()
     {
-        OnIdle();
+        Rb.MovePosition((Vector2)transform.position + new Vector2(-speed * Time.deltaTime, 0));
     }
 
     // Use this for initialization
-    private void Start()
+    void Start()
     {
         base.Start();
     }
