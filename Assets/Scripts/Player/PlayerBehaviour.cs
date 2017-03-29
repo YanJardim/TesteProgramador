@@ -12,7 +12,7 @@ public class PlayerBehaviour : MonoBehaviour
     private Bounds backgroundBounds, playerBounds;
     private Vector2 playerSize;
 
-    public float speed, fireRatio;
+    public float speed, fireRatio, invulnerabilityTime;
     public bool dragging, canShoot, invulnerability;
     public int maxHp, hp;
 
@@ -44,6 +44,10 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
         {
+            if (IsDead())
+            {
+                GameManager.Instance.SetStateToRank();
+            }
             LimitPlayerOnBackground();
             Shoot();
             hpText.text = "x " + hp;
@@ -66,8 +70,6 @@ public class PlayerBehaviour : MonoBehaviour
     {
         hp -= amount;
     }
-
-
 
     private void Move()
     {
@@ -113,7 +115,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (Input.GetAxis("Fire1") != 0 && canShoot)
         {
             GameObject aux = Instantiate(bullet, Gun.position, bullet.transform.rotation);
-            aux.GetComponent<BulletBehaviour>().direction = false;
+            aux.GetComponent<BulletBehaviour>().direction = Vector2.right;
             StartCoroutine(FireRatioCooldown());
         }
     }
@@ -129,7 +131,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy" && !invulnerability && GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
+        if (collision.tag == "Enemy" || collision.tag == "EnemyBullet" && !invulnerability && GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
         {
             SubHp(1);
             invulnerability = true;
@@ -139,44 +141,44 @@ public class PlayerBehaviour : MonoBehaviour
 
     private IEnumerator InvulnerabilityCoroutine()
     {
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+
+        Color oldColor = Color.white;
+        Color newColor = oldColor;
+
         if (invTimes <= invTimesMax)
         {
 
-            SpriteRenderer renderer = GetComponent<SpriteRenderer>();
 
-            Color oldColor = renderer.color;
-            Color newColor = oldColor;
             newColor.a = 0;
             renderer.color = newColor;
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(invulnerabilityTime / 2);
 
             renderer.color = oldColor;
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(invulnerabilityTime / 2);
             invTimes++;
             StartCoroutine(InvulnerabilityCoroutine());
 
         }
         else
         {
+            renderer.color = oldColor;
             invTimes = 0;
             invulnerability = false;
         }
 
     }
-
     public bool IsDead()
     {
         return hp <= 0;
     }
-
     public void LimitPlayerOnBackground()
     {
         Vector2 playerPos = transform.position;
 
         playerPos.x = Mathf.Clamp(playerPos.x, backgroundBounds.min.x + playerSize.x / 2, backgroundBounds.max.x - playerSize.x / 2);
-
         playerPos.y = Mathf.Clamp(playerPos.y, backgroundBounds.min.y + playerSize.y / 2, backgroundBounds.max.y - playerSize.y / 2);
 
         transform.position = playerPos;

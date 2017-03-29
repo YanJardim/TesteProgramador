@@ -17,14 +17,17 @@ public class SpawnManager : Singleton<SpawnManager>
     private float timer;
 
     public Text spawnLevelText;
+    public GameObject background;
 
     private const string spawnLevelConstString = "Level: ";
+    private Bounds backgroundBounds;
 
     // Use this for initialization
     void Start()
     {
         StartCoroutine(SpawnRepeting());
         startSpawnTime = spawnTime;
+        backgroundBounds = background.GetComponent<SpriteRenderer>().bounds;
     }
 
     // Update is called once per frame
@@ -37,12 +40,15 @@ public class SpawnManager : Singleton<SpawnManager>
 
     public void SpawnEnemy()
     {
-
+        //TODO: passar parte disso pro enemy
         int rand = Random.Range(0, enemiesToSpawn.Count);
-        Vector2 worldBoundPosX = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.width));
-        Vector2 worldBoundPosY = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height));
-        Vector2 spawnPos = new Vector2(worldBoundPosX.y,
-                                      Random.Range(worldBoundPosY.x + 2, worldBoundPosY.y - 2));
+        Bounds enemyBounds = enemiesToSpawn[rand].GetComponent<SpriteRenderer>().bounds;
+        Vector2 enemySize = new Vector2(enemyBounds.max.x - enemyBounds.min.x, enemyBounds.max.y - enemyBounds.min.y);
+        Vector2 screenBoundsX = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.width));
+
+
+        Vector2 spawnPos = new Vector2(screenBoundsX.y,
+                                      Random.Range(backgroundBounds.min.y + enemySize.y, backgroundBounds.max.y - enemySize.y));
 
 
 
@@ -54,9 +60,8 @@ public class SpawnManager : Singleton<SpawnManager>
     {
         yield return new WaitForSeconds(spawnTime);
 
-        if (enemiesToSpawn.Count > 0)
+        if (enemiesToSpawn.Count > 0 && GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
             SpawnEnemy();
-        else Debug.LogWarning("enemiesToSpawn is empty");
 
         StartCoroutine(SpawnRepeting());
     }

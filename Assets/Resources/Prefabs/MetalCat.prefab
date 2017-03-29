@@ -92,6 +92,8 @@ MonoBehaviour:
   points: 100
   attackChance: 80
   speed: 2
+  bullet: {fileID: 1363803110511398, guid: f49e529741f4f9b498011b6ef064921f, type: 2}
+  fireRatio: 1
 --- !u!212 &212048571553595416
 SpriteRenderer:
   m_ObjectHideFlags: 1

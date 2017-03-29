@@ -56,7 +56,16 @@ public class GameManager : Singleton<GameManager>
     {
         return currentGameState == state;
     }
+    public void SetCurrentGameState(GAMESTATES state)
+    {
+        currentGameState = state;
+    }
 
+    public void SetStateToRank()
+    {
+        SetCurrentGameState(GAMESTATES.RANK);
+
+    }
 
 
 

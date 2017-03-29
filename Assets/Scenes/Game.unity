@@ -329,6 +329,7 @@ MonoBehaviour:
   reduceSpawntimeFactor: 500
   reduceSpawntimeAmount: 0.15
   spawnLevelText: {fileID: 652303701}
+  background: {fileID: 1205998821}
 --- !u!1 &419411261
 GameObject:
   m_ObjectHideFlags: 0

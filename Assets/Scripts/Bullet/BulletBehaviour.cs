@@ -5,14 +5,15 @@ using UnityEngine;
 public class BulletBehaviour : MonoBehaviour
 {
 
-    public bool direction;
     private Rigidbody2D Rb { get; set; }
     public int speed;
+
+    public Vector2 direction;
     // Use this for initialization
     void Start()
     {
         Rb = GetComponent<Rigidbody2D>();
-        Rb.AddForce(Vector2.right * (direction ? -speed : speed) * Time.deltaTime, ForceMode2D.Impulse);
+        Rb.AddForce(direction * speed * Time.deltaTime, ForceMode2D.Impulse);
     }
 
     // Update is called once per frame

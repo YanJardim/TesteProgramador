@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class MetalCatBehaviour : Enemy
 {
+
+    public GameObject bullet;
+    public float fireRatio;
+
+    private float timer;
+
     public override void OnAttack()
     {
         /*Vector3 movePosition = transform.position;
@@ -17,6 +23,19 @@ public class MetalCatBehaviour : Enemy
     public override void OnIdle()
     {
         Rb.MovePosition((Vector2)transform.position + new Vector2(-speed * Time.deltaTime, 0));
+        timer += Time.deltaTime;
+
+        if (timer >= fireRatio)
+        {
+            Vector2 playerPos = Player.transform.position;
+            bullet.GetComponent<BulletBehaviour>().direction = (playerPos - (Vector2)transform.position).normalized;
+
+            Instantiate(bullet, transform.position, bullet.transform.rotation);
+            timer = 0;
+
+        }
+
+
     }
 
     public override void OnTrigger()
