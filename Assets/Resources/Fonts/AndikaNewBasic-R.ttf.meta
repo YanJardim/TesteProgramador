@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 4bf90b0e75612bb449f3c3fc78ddf5ac
+timeCreated: 1490817371
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Andika New Basic
+  fontNames:
+  - Andika New Basic
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

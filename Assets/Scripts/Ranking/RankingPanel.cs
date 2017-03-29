@@ -11,7 +11,7 @@ public class RankingPanel : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        List<SerializableScore> scoresList = new List<SerializableScore>();
+        /*List<SerializableScore> scoresList = new List<SerializableScore>();
         SerializableScore s1 = new SerializableScore("Maria", 550);
         SerializableScore s2 = new SerializableScore("Jose", 20);
         SerializableScore s3 = new SerializableScore("João", 50);
@@ -35,7 +35,7 @@ public class RankingPanel : MonoBehaviour
         scoresList.Add(s10);
 
 
-        Ranking.SaveRankings(scoresList);
+        Ranking.SaveRankings(scoresList);*/
 
 
         LoadRankings();
@@ -55,19 +55,20 @@ public class RankingPanel : MonoBehaviour
         int scoreListCount = scoresList.Count;
         scoreListCount = scoreListCount > 5 ? 5 : scoreListCount;
 
-        for (int i = 0; i < scoreListCount; i++)
+        if (scoreListCount > 0)
         {
-            scorePanel.transform.GetChild(0).GetComponent<Text>().text = scoresList[i].Name;
-            scorePanel.transform.GetChild(1).GetComponent<Text>().text = scoresList[i].Score.ToString();
-            scorePanel.transform.GetChild(2).GetComponent<Text>().text = (i + 1).ToString();
+            for (int i = 0; i < scoreListCount; i++)
+            {
+                scorePanel.transform.GetChild(0).GetComponent<Text>().text = scoresList[i].Name;
+                scorePanel.transform.GetChild(1).GetComponent<Text>().text = scoresList[i].Score.ToString();
+                scorePanel.transform.GetChild(2).GetComponent<Text>().text = (i + 1).ToString();
 
-            GameObject newScore = Instantiate(scorePanel);
+                GameObject newScore = Instantiate(scorePanel);
 
-            newScore.name = scoresList[i].Name + " ScorePanel";
-            newScore.transform.SetParent(transform, false);
+                newScore.name = scoresList[i].Name + " ScorePanel";
+                newScore.transform.SetParent(transform, false);
+            }
         }
-
-
         //}
 
     }

@@ -42,6 +42,47 @@ public class Ranking
         SaveRankings(scoreList);
     }
 
+    public static void AddRanking(SerializableScore serializableScore)
+    {
+        List<SerializableScore> scoreList;
+
+        if (!File.Exists(GetRankingPath()))
+        {
+            //Cria uma nova lista de scores
+            scoreList = new List<SerializableScore>();
+            //Adiciona um score a lista de scores
+            scoreList.Add(serializableScore);
+        }
+        else
+        {
+            scoreList = GetRankings();
+
+            if (scoreList.Count >= 5)
+            {
+                if (serializableScore.Score > scoreList[4].Score)
+                {
+                    scoreList.Add(serializableScore);
+                    scoreList = SortList(scoreList);
+                    scoreList.RemoveAt(5);
+                }
+            }
+            else
+            {
+                scoreList.Add(serializableScore);
+                scoreList = SortList(scoreList);
+            }
+
+        }
+        //Cria um arquivo, ou grava em cima de um existente
+        using (FileStream fs = File.Create(GetRankingPath()))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            //Serializa a lista para dentro do arquivo
+            bf.Serialize(fs, scoreList);
+        }
+    }
+
+    [System.Obsolete("SaveRanking changed to AddRanking")]
     /// <summary>
     /// Salva um Score no arquivo rankings.sr
     /// </summary>
@@ -160,5 +201,11 @@ public class Ranking
         {
             Debug.Log(a.Name + " - " + a.Score);
         }
+    }
+
+    public static List<SerializableScore> SortList(List<SerializableScore> scoreList)
+    {
+        scoreList.Sort((x, y) => y.Score.CompareTo(x.Score));
+        return scoreList;
     }
 }

@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
 
     //Referencia para o objeto UI de texto na cena
     public Text scoreText;
+    public GameObject scoreCanvas;
     // Use this for initialization
     void Start()
     {
@@ -37,6 +38,7 @@ public class GameManager : Singleton<GameManager>
 
                 break;
             case GAMESTATES.RANK:
+                Time.timeScale = 0;
 
                 break;
         }
@@ -64,7 +66,7 @@ public class GameManager : Singleton<GameManager>
     public void SetStateToRank()
     {
         SetCurrentGameState(GAMESTATES.RANK);
-
+        Instantiate(scoreCanvas);
     }
 
 

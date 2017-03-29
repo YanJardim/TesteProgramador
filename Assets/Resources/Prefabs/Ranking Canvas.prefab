@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222629222104773550}
   - component: {fileID: 114593483298631944}
   m_Layer: 5
-  m_Name: Score
+  m_Name: txtScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 222719876414190968}
   - component: {fileID: 114223071932568128}
   m_Layer: 5
-  m_Name: Image
+  m_Name: imgSpaceship
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 222644053006591336}
   - component: {fileID: 114222706621064848}
   m_Layer: 5
-  m_Name: BlackBg
+  m_Name: panelBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 114837150772024810}
   - component: {fileID: 114801915821983544}
   m_Layer: 5
-  m_Name: Header
+  m_Name: HeaderPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 222349880666556126}
   - component: {fileID: 114828520514935832}
   m_Layer: 5
-  m_Name: Name
+  m_Name: txtName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 222729733381453352}
   - component: {fileID: 114993995849094288}
   m_Layer: 5
-  m_Name: Place
+  m_Name: txtPlace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
