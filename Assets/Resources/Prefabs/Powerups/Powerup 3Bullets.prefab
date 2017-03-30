@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212208939262830346}
   - component: {fileID: 61378820825510776}
   - component: {fileID: 50263089559055332}
+  - component: {fileID: 114681954440011014}
   m_Layer: 0
   m_Name: Powerup 3Bullets
   m_TagString: Untagged
@@ -36,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1451211708366480}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.635, y: 2.078, z: 0}
+  m_LocalPosition: {x: -3.72, y: 2.09, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,6 +77,17 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1.28, y: 1.28}
+--- !u!114 &114681954440011014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1451211708366480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b0cd9f9c730f6b438b1b04b4bcb85c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212208939262830346
 SpriteRenderer:
   m_ObjectHideFlags: 1

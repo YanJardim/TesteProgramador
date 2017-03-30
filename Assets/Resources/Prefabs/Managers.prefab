@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 114842563223062084}
   - component: {fileID: 114077635451290964}
   - component: {fileID: 114294372693988868}
+  - component: {fileID: 114381277882149808}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -330,9 +331,9 @@ MonoBehaviour:
   - {fileID: 1967323467123686, guid: 7c20db7235e421e4585569955cb38cba, type: 2}
   - {fileID: 1702169418845154, guid: 97513b9d9c5f1144baf9f1e5165fff70, type: 2}
   spawnTime: 2
-  spawnLevel: 0
   reduceSpawntimeFactor: 500
   reduceSpawntimeAmount: 0.15
+  spawnLevel: 0
   spawnLevelText: {fileID: 0}
   background: {fileID: 0}
 --- !u!114 &114294372693988868
@@ -357,6 +358,21 @@ MonoBehaviour:
   sfxSource: {fileID: 82350760578491632}
   sfxSource2: {fileID: 82587686162387744}
   musicSource: {fileID: 82033443175003898}
+--- !u!114 &114381277882149808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883563672231164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6123b3cb8675d974d8b17cc1ec1a6f2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerupsList:
+  - {fileID: 1451211708366480, guid: 908e1db865e117e41869ac57edbf53d7, type: 2}
+  - {fileID: 1786778044504814, guid: 8126ef3969f9bf2408b17f0e6a03597a, type: 2}
+  - {fileID: 1505848456277948, guid: c15f2d93c2bc8a34e896d0a6ac5bbc2c, type: 2}
 --- !u!114 &114842563223062084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -368,6 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85eb6a8e21d9db41bdb50fa4803cf5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   score: 0
   currentGameState: 0
   scoreText: {fileID: 0}

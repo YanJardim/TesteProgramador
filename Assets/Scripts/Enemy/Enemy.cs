@@ -28,10 +28,11 @@ public abstract class Enemy : MonoBehaviour
 
     //Chance do inimigo ir para o estado de Attack
     [Range(0, 100)]
-    public int attackChance;
+    public int attackChance, spawnPowerupChance;
 
     //Velocidade do inimigo
     public float speed;
+
 
     // Use this for initialization
     protected void Start()
@@ -48,8 +49,6 @@ public abstract class Enemy : MonoBehaviour
         hp = hp <= 0 ? 1 : hp;
 
     }
-
-
     /// <summary>
     /// Metodo abstrato para o estado de Attack (quando o inimigo entra em modo de ataque)
     /// </summary>
@@ -102,6 +101,10 @@ public abstract class Enemy : MonoBehaviour
         //Caso a bala do jogador atinga o inimigo
         if (collision.tag == "PlayerBullet")
         {
+
+
+
+
             //Destroi a bala
             Destroy(collision.gameObject);
 
@@ -127,6 +130,7 @@ public abstract class Enemy : MonoBehaviour
         {
             //Cria um numero randomico entre 1 e 100
             int rand = Random.Range(0, 100);
+
 
             //Verifica se o numero randomico é menor que a chance de mudar de estado
             if (rand <= attackChance)
@@ -178,6 +182,8 @@ public abstract class Enemy : MonoBehaviour
         hp--;
         if (hp <= 0)
         {
+            PowerupSpawner.Instance.SpawnPowerup(transform.position, spawnPowerupChance);
+
             //Adiciona pontos na variavel Score do GameManager
             SoundManager.Instance.PlaySfx("explosion1");
             GameManager.Instance.AddScore(points);

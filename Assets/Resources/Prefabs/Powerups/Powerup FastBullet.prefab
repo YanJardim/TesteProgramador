@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212289635086785876}
   - component: {fileID: 61262547279885690}
   - component: {fileID: 50179086284760598}
+  - component: {fileID: 114682718740519922}
   m_Layer: 0
   m_Name: Powerup FastBullet
   m_TagString: Untagged
@@ -76,6 +77,17 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1.28, y: 1.28}
+--- !u!114 &114682718740519922
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1786778044504814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb120bbddb75b940bba6541939bead8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212289635086785876
 SpriteRenderer:
   m_ObjectHideFlags: 1
