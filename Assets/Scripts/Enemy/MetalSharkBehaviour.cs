@@ -3,10 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Classe para controlar o comportamento do Metal Shark
+/// </summary>
 public class MetalSharkBehaviour : Enemy
 {
     public override void OnAttack()
     {
+
         Rb.MovePosition((Vector2)transform.position + new Vector2(-speed * Time.deltaTime, 0));
     }
 

@@ -16,8 +16,9 @@ public class GameManager : Singleton<GameManager>
 
     public GAMESTATES currentGameState;
 
-    //Referencia para o objeto UI de texto na cena
+    //Referencia para o texto de score na cena
     public Text scoreText;
+    //Referencia para a prefab canvas de score
     public GameObject scoreCanvas;
     // Use this for initialization
     void Start()
@@ -55,25 +56,33 @@ public class GameManager : Singleton<GameManager>
     {
         score += amount;
     }
-
+    /// <summary>
+    /// Metodo para verificar o estado atual do jogo
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
     public bool IsCurrentGameState(GAMESTATES state)
     {
         return currentGameState == state;
     }
+
+    /// <summary>
+    /// Metodo para setar o estado atual de jogo
+    /// </summary>
+    /// <param name="state"></param>
     public void SetCurrentGameState(GAMESTATES state)
     {
         currentGameState = state;
     }
 
+    /// <summary>
+    /// Metodo para setar o estado atual para RANK
+    /// </summary>
     public void SetStateToRank()
     {
         SetCurrentGameState(GAMESTATES.RANK);
 
+        //Instancia o canvas de score na cena
         Instantiate(scoreCanvas);
-
-
     }
-
-
-
 }

@@ -4,76 +4,57 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Classe para gerenciar o painel de ranking
+/// </summary>
 public class RankingPanel : MonoBehaviour
 {
-
+    //Referencia para o painel de score na cena
     public GameObject scorePanel;
 
     // Use this for initialization
     void Start()
     {
-        /*List<SerializableScore> scoresList = new List<SerializableScore>();
-        SerializableScore s1 = new SerializableScore("Maria", 550);
-        SerializableScore s2 = new SerializableScore("Jose", 20);
-        SerializableScore s3 = new SerializableScore("João", 50);
-        SerializableScore s4 = new SerializableScore("Jorge", 300);
-        SerializableScore s5 = new SerializableScore("Tavares", 220);
-        SerializableScore s6 = new SerializableScore("Juan", 30);
-        SerializableScore s7 = new SerializableScore("Mario", 450);
-        SerializableScore s8 = new SerializableScore("Paula", 70);
-        SerializableScore s9 = new SerializableScore("Gerogia", 80);
-        SerializableScore s10 = new SerializableScore("Joana", 720);
-
-        scoresList.Add(s1);
-        scoresList.Add(s2);
-        scoresList.Add(s3);
-        scoresList.Add(s4);
-        scoresList.Add(s5);
-        scoresList.Add(s6);
-        scoresList.Add(s7);
-        scoresList.Add(s8);
-        scoresList.Add(s9);
-        scoresList.Add(s10);
-
-
-        Ranking.SaveRankings(scoresList);*/
-
-
         LoadRankings();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    /// <summary>
+    /// Metodo para carregar os rankings e mostrar no painel
+    /// </summary>
     public void LoadRankings()
     {
+        //Carrega os rankings atuais do arquivo rankings.sr em uma lista
         List<SerializableScore> scoresList = RankingUtils.GetRankings();
+        //Limpa todos os objetos de score no painel de ranking
         ClearChilds();
-
+        //Conta quantos elementos tem na lista
         int scoreListCount = scoresList.Count;
+        //Caso seja maior que 5 mudar o valor para 5
         scoreListCount = scoreListCount > 5 ? 5 : scoreListCount;
-
+        //Verifica se a lista tem mais que 0 elementos
         if (scoreListCount > 0)
         {
+            //Percorre a lista
             for (int i = 0; i < scoreListCount; i++)
             {
+                //Seta o painel de score com as informações do score atual
                 scorePanel.transform.GetChild(0).GetComponent<Text>().text = scoresList[i].Name;
                 scorePanel.transform.GetChild(1).GetComponent<Text>().text = scoresList[i].Score.ToString();
                 scorePanel.transform.GetChild(2).GetComponent<Text>().text = (i + 1).ToString();
-
+                //Instancia o painel de score no painel de ranking
                 GameObject newScore = Instantiate(scorePanel);
-
+                //Muda o nome do painel de score
                 newScore.name = scoresList[i].Name + " ScorePanel";
+                //Seta o novo painel de score como filho do painel de ranking
                 newScore.transform.SetParent(transform, false);
             }
         }
-        //}
+
 
     }
-
+    /// <summary>
+    /// Metodo para limpar todos os objetos de score
+    /// </summary>
     public void ClearChilds()
     {
         foreach (Transform child in transform)
@@ -81,10 +62,16 @@ public class RankingPanel : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
+    /// <summary>
+    /// Metodo para voltar a cena de Menu
+    /// </summary>
     public void BackToMenu()
     {
         SceneManager.LoadScene("Menu");
     }
+    /// <summary>
+    /// Metodo para resetar o jogo
+    /// </summary>
     public void RestartGame()
     {
         SceneManager.LoadScene("Game");

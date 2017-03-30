@@ -58,20 +58,29 @@ public class RankingUtils
         }
         else
         {
+            //Pega os rankings do arquivo rankings.sr
             scoreList = GetRankings();
 
+            //Verifica se a lista tem mais de 5 elementos
             if (scoreList.Count >= 5)
             {
+                //Verifica se o score atual é maior que o elemento 5(para poder colocar ele no top 5)
                 if (serializableScore.Score > scoreList[4].Score)
                 {
+                    //Adiciona o score atual a lista
                     scoreList.Add(serializableScore);
+                    //Ordena a lista
                     scoreList = SortList(scoreList);
+                    //Remove o elemento 6 da lista
                     scoreList.RemoveAt(5);
                 }
             }
+            //Caso não tenha mais de 5 elementos só adiciona sem precisar saber se o score é maior
             else
             {
+                //Adiciona o score atual a lista
                 scoreList.Add(serializableScore);
+                //ordena a lista
                 scoreList = SortList(scoreList);
             }
 
@@ -216,6 +225,11 @@ public class RankingUtils
         return scoreList;
     }
 
+    /// <summary>
+    /// Metodo para verificar se o score é elegivel para ser top 5
+    /// </summary>
+    /// <param name="score"></param>
+    /// <returns></returns>
     public static bool EligibleToTop5(int score)
     {
         List<SerializableScore> scoreList = GetRankings();

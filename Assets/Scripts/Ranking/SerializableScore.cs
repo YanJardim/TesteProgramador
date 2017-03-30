@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//Fazendo a classe ser serializavel para gravar em um arquivo
+/// <summary>
+/// Classe de score serializavel para ser grava em um arquivo
+/// </summary>
 [System.Serializable]
 public class SerializableScore
 {
+    //Essas duas variaveis poderiam ser um dictionary também
     public string Name { get; set; }
     public int Score { get; set; }
 
