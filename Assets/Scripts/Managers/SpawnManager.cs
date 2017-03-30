@@ -80,6 +80,7 @@ public class SpawnManager : Singleton<SpawnManager>
             spawnTime = Mathf.Clamp(spawnTime, 0.5f, Mathf.Infinity);
 
             spawnLevelText.text = spawnLevelConstString + spawnLevel;
+            SoundManager.Instance.PlaySfx("Dif_Up");
 
         }
 

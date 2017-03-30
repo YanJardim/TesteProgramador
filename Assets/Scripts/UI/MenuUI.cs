@@ -8,6 +8,7 @@ public class MenuUI : MonoBehaviour
 
     public void Play()
     {
+
         SceneManager.LoadScene("Game");
     }
 }

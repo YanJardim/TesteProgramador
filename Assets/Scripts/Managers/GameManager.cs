@@ -24,6 +24,7 @@ public class GameManager : Singleton<GameManager>
     {
         currentGameState = GAMESTATES.GAME;
         score = 0;
+        SoundManager.Instance.PlaySfx("Fx1");
     }
 
     // Update is called once per frame

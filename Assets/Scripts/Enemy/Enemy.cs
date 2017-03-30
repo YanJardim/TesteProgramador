@@ -104,10 +104,12 @@ public abstract class Enemy : MonoBehaviour
         {
             //Destroi a bala
             Destroy(collision.gameObject);
-            //Tira vida do inimigo e caso a vida for 0 destroi ele
-            SubLife();
+
             //Muda o estado do inimigo para Trigger
             ChangeState(STATE.TRIGGER);
+
+            //Tira vida do inimigo e caso a vida for 0 destroi ele
+            SubLife();
         }
     }
 
@@ -177,6 +179,7 @@ public abstract class Enemy : MonoBehaviour
         if (hp <= 0)
         {
             //Adiciona pontos na variavel Score do GameManager
+            SoundManager.Instance.PlaySfx("explosion1");
             GameManager.Instance.AddScore(points);
             Destroy(this.gameObject);
         }

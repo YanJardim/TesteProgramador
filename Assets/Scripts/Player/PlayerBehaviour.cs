@@ -47,6 +47,7 @@ public class PlayerBehaviour : MonoBehaviour
             if (IsDead())
             {
                 GameManager.Instance.SetStateToRank();
+                SoundManager.Instance.PlaySfx("player_Explosion");
             }
             LimitPlayerOnBackground();
             Shoot();
@@ -117,6 +118,7 @@ public class PlayerBehaviour : MonoBehaviour
             GameObject aux = Instantiate(bullet, Gun.position, bullet.transform.rotation);
             aux.GetComponent<BulletBehaviour>().direction = Vector2.right;
             StartCoroutine(FireRatioCooldown());
+            SoundManager.Instance.PlaySfx("tiro2");
         }
     }
 
@@ -134,8 +136,10 @@ public class PlayerBehaviour : MonoBehaviour
         if (collision.tag == "Enemy" || collision.tag == "EnemyBullet" && !invulnerability && GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
         {
             SubHp(1);
+            if (hp > 0) SoundManager.Instance.PlaySfx("player_Hit");
             invulnerability = true;
             StartCoroutine(InvulnerabilityCoroutine());
+
         }
     }
 
