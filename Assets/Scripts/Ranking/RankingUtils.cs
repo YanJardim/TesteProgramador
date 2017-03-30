@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public class Ranking
+public class RankingUtils
 {
     public const string RankingPath = "rankings.sr";
 
@@ -41,7 +41,10 @@ public class Ranking
         //Salva a lista de scores
         SaveRankings(scoreList);
     }
-
+    /// <summary>
+    /// Salva um Score no arquivo rankings.sr
+    /// </summary>
+    /// <param name="serializableScore"></param>
     public static void AddRanking(SerializableScore serializableScore)
     {
         List<SerializableScore> scoreList;
@@ -202,10 +205,27 @@ public class Ranking
             Debug.Log(a.Name + " - " + a.Score);
         }
     }
-
+    /// <summary>
+    /// Retorna uma lista de scores ordenada por maior score
+    /// </summary>
+    /// <param name="scoreList"></param>
+    /// <returns></returns>
     public static List<SerializableScore> SortList(List<SerializableScore> scoreList)
     {
         scoreList.Sort((x, y) => y.Score.CompareTo(x.Score));
         return scoreList;
     }
+
+    public static bool EligibleToTop5(int score)
+    {
+        List<SerializableScore> scoreList = GetRankings();
+
+        if (scoreList.Count < 5)
+        {
+            return true;
+        }
+
+        return score > scoreList[4].Score;
+    }
+
 }

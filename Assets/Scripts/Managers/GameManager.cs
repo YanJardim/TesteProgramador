@@ -32,6 +32,7 @@ public class GameManager : Singleton<GameManager>
         switch (currentGameState)
         {
             case GAMESTATES.GAME:
+                Time.timeScale = 1;
                 scoreText.text = constScoreText + score;
                 break;
             case GAMESTATES.PAUSE:
@@ -66,7 +67,10 @@ public class GameManager : Singleton<GameManager>
     public void SetStateToRank()
     {
         SetCurrentGameState(GAMESTATES.RANK);
+
         Instantiate(scoreCanvas);
+
+
     }
 
 

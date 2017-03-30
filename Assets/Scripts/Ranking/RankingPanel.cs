@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class RankingPanel : MonoBehaviour
 {
@@ -49,7 +50,7 @@ public class RankingPanel : MonoBehaviour
 
     public void LoadRankings()
     {
-        List<SerializableScore> scoresList = Ranking.GetRankings();
+        List<SerializableScore> scoresList = RankingUtils.GetRankings();
         ClearChilds();
 
         int scoreListCount = scoresList.Count;
@@ -79,5 +80,13 @@ public class RankingPanel : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+    }
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Game");
     }
 }

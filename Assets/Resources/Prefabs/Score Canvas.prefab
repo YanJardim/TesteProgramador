@@ -387,6 +387,7 @@ MonoBehaviour:
   txtScore: {fileID: 114568467765284894}
   rankingCavas: {fileID: 1176597578008624, guid: 54e8127f186e3364cb6f4a6789399198,
     type: 2}
+  elementsToHide: []
 --- !u!114 &114314621451021512
 MonoBehaviour:
   m_ObjectHideFlags: 1
