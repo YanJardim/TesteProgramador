@@ -24,13 +24,19 @@ public class PlayerBehaviour : MonoBehaviour
     //Variaveis para verificar se o jogador está com o dedo carregando o player,
     //para ver se o player pode atirar e se ele está invuneravel
     public bool dragging, canShoot, invulnerability;
+    public bool powerup3Bullets, powerupShield, powerupFast;
+    //[HideInInspector]
+    public float powerupTimer, powerupTimerMax;
+
+    private float startFireRatio, doubleFireRatio;
+
     //Variaveis para guardar o hp maximo e atual do player
     public int maxHp, hp;
     //Variaveis parar guardar a prefab de bala e referencia para o background na cena
     public GameObject bullet, background;
     //Referencia para o texto de hp na cena
-    public Text hpText;
-
+    public Text hpText, powerupTimerText;
+    public GameObject powerupUi;
 
     // Use this for initialization
     void Start()
@@ -48,6 +54,18 @@ public class PlayerBehaviour : MonoBehaviour
         backgroundBounds = background.GetComponent<SpriteRenderer>().bounds;
         playerBounds = GetComponent<SpriteRenderer>().bounds;
         playerSize = new Vector2(playerBounds.max.x - playerBounds.min.x, playerBounds.max.y - playerBounds.min.y);
+
+
+        powerupShield = false;
+        powerup3Bullets = false;
+        powerupFast = false;
+
+        powerupTimer = 0;
+        powerupTimerMax = 0;
+        powerupUi.SetActive(false);
+
+        startFireRatio = fireRatio;
+        doubleFireRatio = fireRatio / 2;
 
     }
 
@@ -68,8 +86,36 @@ public class PlayerBehaviour : MonoBehaviour
             LimitPlayerOnBackground();
             //Faz o player atirar
             Shoot();
+
             //Atribui o texto de UI de hp para o hp atual
             hpText.text = "x " + hp;
+
+            if (powerup3Bullets || powerupFast || powerupShield)
+            {
+                powerupUi.SetActive(true);
+                powerupTimer += Time.deltaTime;
+                int t = (int)powerupTimerMax - (int)powerupTimer;
+                powerupTimerText.text = t.ToString();
+                if (powerupTimer > powerupTimerMax)
+                {
+                    if (powerupFast)
+                    {
+                        DisableFastBullet();
+                    }
+                    powerupTimer = 0;
+                    powerupTimerMax = 0;
+                    powerup3Bullets = false;
+                    powerupFast = false;
+                    powerupShield = false;
+                    powerupUi.SetActive(false);
+                }
+
+            }
+            if (!IsAPowerupActivated())
+            {
+                powerupUi.SetActive(false);
+            }
+
         }
     }
 
@@ -155,6 +201,13 @@ public class PlayerBehaviour : MonoBehaviour
             GameObject aux = Instantiate(bullet, Gun.position, bullet.transform.rotation);
             //Seta a direção da bala
             aux.GetComponent<BulletBehaviour>().direction = Vector2.right;
+            if (powerup3Bullets)
+            {
+                GameObject aux2 = Instantiate(bullet, Gun.position, bullet.transform.rotation);
+                aux2.GetComponent<BulletBehaviour>().direction = (Vector2.right + (Vector2.up / 2)).normalized;
+                GameObject aux3 = Instantiate(bullet, Gun.position, bullet.transform.rotation);
+                aux3.GetComponent<BulletBehaviour>().direction = (Vector2.right + (Vector2.down / 2)).normalized;
+            }
             //Executa a corotina para deixar o tiro em cooldown
             StartCoroutine(FireRatioCooldown());
             //Executa o som de tiro
@@ -178,7 +231,7 @@ public class PlayerBehaviour : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Verifica se tocou em um inimigo ou bala de inimigo se ele n estiver invuneravel e o estado de jogo atual for GAME
-        if (collision.tag == "Enemy" || collision.tag == "EnemyBullet" && !invulnerability && GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
+        if ((collision.tag == "Enemy" || collision.tag == "EnemyBullet") && !invulnerability && !powerupShield && GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
         {
             //Tira um de hp do player
             SubHp(1);
@@ -187,7 +240,8 @@ public class PlayerBehaviour : MonoBehaviour
             //Deixa o jogador invuneravel
             invulnerability = true;
             //Executa a corotina para o jogador ficar piscando
-            StartCoroutine(InvulnerabilityCoroutine());
+            StartCoroutine(InvulnerabilityCoroutine(invulnerabilityTime, invTimesMax));
+
 
         }
     }
@@ -196,8 +250,10 @@ public class PlayerBehaviour : MonoBehaviour
     /// Corotina para fazer o jogador ficar piscando
     /// </summary>
     /// <returns></returns>
-    private IEnumerator InvulnerabilityCoroutine()
+    public IEnumerator InvulnerabilityCoroutine(float time, float repeatTimes)
     {
+        invulnerability = true;
+
         //Referencia para o SpriteRenderer do player
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
 
@@ -207,7 +263,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         //Verifica se a quantidade de vezes que o jogador ficou invisivel 
         //é menor que o total de vezes que ele pode
-        if (invTimes <= invTimesMax)
+        if (invTimes <= repeatTimes)
         {
             //Seta o alpha da nova cor para 0;
             newColor.a = 0;
@@ -215,15 +271,15 @@ public class PlayerBehaviour : MonoBehaviour
             renderer.color = newColor;
 
             //Espera o tempo de invunerabilidade pela metade
-            yield return new WaitForSeconds(invulnerabilityTime / 2);
+            yield return new WaitForSeconds(time / 2);
             //Muda a cor do player para a cor antiga
             renderer.color = oldColor;
             //Espera o tempo de invunerabilidade pela metade
-            yield return new WaitForSeconds(invulnerabilityTime / 2);
+            yield return new WaitForSeconds(time / 2);
             //Aumenta a quantidade de vezes que ele ficou invisivel
             invTimes++;
             //Repete a corotina
-            StartCoroutine(InvulnerabilityCoroutine());
+            StartCoroutine(InvulnerabilityCoroutine(time, repeatTimes));
 
         }
         else
@@ -257,6 +313,41 @@ public class PlayerBehaviour : MonoBehaviour
         playerPos.y = Mathf.Clamp(playerPos.y, backgroundBounds.min.y + playerSize.y / 2, backgroundBounds.max.y - playerSize.y / 2);
 
         transform.position = playerPos;
+    }
+
+    public void ChangePowerup()
+    {
+        if (powerupFast)
+        {
+            DisableFastBullet();
+        }
+        powerupShield = false;
+        powerup3Bullets = false;
+        powerupFast = false;
+
+        powerupTimer = 0;
+        powerupTimerMax = 10;
+
 
     }
+
+    public bool IsAPowerupActivated()
+    {
+        if (powerup3Bullets || powerupFast || powerupShield)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void ActiveFastBullet()
+    {
+        fireRatio = doubleFireRatio;
+    }
+    public void DisableFastBullet()
+    {
+        fireRatio = startFireRatio;
+    }
+
+
 }

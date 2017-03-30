@@ -7,6 +7,8 @@ public enum GAMESTATES { GAME, PAUSE, RANK };
 
 public class GameManager : Singleton<GameManager>
 {
+    //Referencia para o player
+    public PlayerBehaviour player;
 
     //String constante do texto de Score
     private const string constScoreText = "Score: ";
@@ -23,6 +25,7 @@ public class GameManager : Singleton<GameManager>
     // Use this for initialization
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         currentGameState = GAMESTATES.GAME;
         score = 0;
         SoundManager.Instance.PlaySfx("Fx1");
