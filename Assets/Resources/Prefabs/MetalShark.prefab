@@ -91,7 +91,7 @@ MonoBehaviour:
   hp: 2
   points: 80
   attackChance: 50
-  spawnPowerupChance: 100
+  spawnPowerupChance: 5
   speed: 3
 --- !u!212 &212313161263196818
 SpriteRenderer:
