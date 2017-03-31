@@ -54,7 +54,8 @@ public class SoundManager : Singleton<SoundManager>
         {
             if (audio.name == audioName)
             {
-                musicSource.PlayOneShot(audio);
+                musicSource.clip = audio;
+                musicSource.Play();
             }
         }
     }
