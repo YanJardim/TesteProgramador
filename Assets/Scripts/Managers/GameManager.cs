@@ -21,7 +21,8 @@ public class GameManager : Singleton<GameManager>
     //Referencia para o texto de score na cena
     public Text scoreText;
     //Referencia para a prefab canvas de score
-    public GameObject scoreCanvas;
+    public GameObject scoreCanvas, background;
+
     // Use this for initialization
     void Start()
     {

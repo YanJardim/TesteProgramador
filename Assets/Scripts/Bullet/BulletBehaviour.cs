@@ -19,13 +19,14 @@ public class BulletBehaviour : MonoBehaviour
         //Pega o component de ridgdbody
         Rb = GetComponent<Rigidbody2D>();
         //Move a bala para a direção atual
-        Rb.AddForce(direction * speed * Time.deltaTime, ForceMode2D.Impulse);
+        //Rb.AddForce(direction.normalized * speed * Time.deltaTime, ForceMode2D.Impulse);
     }
 
     // Update is called once per frame
     void Update()
     {
         //Verifica se pode destruir a bala
+        Rb.MovePosition((Vector2)transform.position + (direction * speed * Time.deltaTime));
         CheckIfCanDestroy();
 
     }

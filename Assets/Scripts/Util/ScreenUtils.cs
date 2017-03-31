@@ -27,4 +27,11 @@ public class ScreenUtils
         return screenPoint.x < 0;
     }
 
+    public static bool IsInside(Vector2 position, Bounds bounds)
+    {
+        return position.x > bounds.min.x && position.x < bounds.max.x && position.y > bounds.min.y && position.y < bounds.max.y;
+    }
+
+
+
 }

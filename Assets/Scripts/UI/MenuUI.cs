@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuUI
+public class MenuUI : MonoBehaviour
 {
     /// <summary>
     /// Metodo para carregar a cena Game

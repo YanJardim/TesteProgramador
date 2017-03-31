@@ -91,8 +91,13 @@ MonoBehaviour:
   hp: 2
   points: 80
   attackChance: 50
-  spawnPowerupChance: 5
+  spawnPowerupChance: 10
   speed: 3
+  size: {x: 0, y: 0}
+  maxTriggerTime: 0
+  triggerCooldown: 0
+  maxAttackTime: 0
+  attackCooldown: 0
 --- !u!212 &212313161263196818
 SpriteRenderer:
   m_ObjectHideFlags: 1

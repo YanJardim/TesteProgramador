@@ -330,12 +330,14 @@ MonoBehaviour:
   - {fileID: 1649289662837544, guid: 4050b18c66af02041b39c82b66c68335, type: 2}
   - {fileID: 1967323467123686, guid: 7c20db7235e421e4585569955cb38cba, type: 2}
   - {fileID: 1702169418845154, guid: 97513b9d9c5f1144baf9f1e5165fff70, type: 2}
+  boss: {fileID: 1404402717315198, guid: 52444084dc0bf1f4a8a6d75b72a82b81, type: 2}
   spawnTime: 2
   reduceSpawntimeFactor: 500
   reduceSpawntimeAmount: 0.15
   spawnLevel: 0
   spawnLevelText: {fileID: 0}
   background: {fileID: 0}
+  canSpawn: 0
 --- !u!114 &114294372693988868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -390,3 +392,4 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   scoreCanvas: {fileID: 1979611462572368, guid: 96b5e8f650b099b44ba84baf85ca6260,
     type: 2}
+  background: {fileID: 0}

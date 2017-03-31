@@ -10,6 +10,7 @@ public class SpawnManager : Singleton<SpawnManager>
 {
     //Lista com prefabs dos inimigos para spawnar
     public List<GameObject> enemiesToSpawn = new List<GameObject>();
+    public GameObject boss;
     //Variaveis para controlar tempo de spawn
     public float spawnTime;
     public int reduceSpawntimeFactor;
@@ -27,6 +28,8 @@ public class SpawnManager : Singleton<SpawnManager>
     private const string spawnLevelConstString = "Level: ";
     private Bounds backgroundBounds;
 
+    public bool canSpawn;
+
     // Use this for initialization
     void Start()
     {
@@ -35,6 +38,7 @@ public class SpawnManager : Singleton<SpawnManager>
         startSpawnTime = spawnTime;
         //pega as bounds do bakcground
         backgroundBounds = background.GetComponent<SpriteRenderer>().bounds;
+        canSpawn = true;
     }
 
     // Update is called once per frame
@@ -67,6 +71,19 @@ public class SpawnManager : Singleton<SpawnManager>
         Instantiate(enemiesToSpawn[rand], spawnPos, enemiesToSpawn[rand].transform.rotation);
 
     }
+
+    public void SpawnBoss()
+    {
+        Bounds enemyBounds = boss.GetComponent<SpriteRenderer>().bounds;
+        Vector2 enemySize = new Vector2(enemyBounds.max.x - enemyBounds.min.x, enemyBounds.max.y - enemyBounds.min.y);
+        Vector2 screenBoundsX = Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.width));
+        Vector2 spawnPos = new Vector2(screenBoundsX.y - enemySize.x,
+                                      Random.Range(backgroundBounds.min.y + enemySize.y, backgroundBounds.max.y - enemySize.y));
+
+        Instantiate(boss, spawnPos, boss.transform.rotation);
+
+    }
+
     /// <summary>
     /// Corotina para spawnar inimgios
     /// </summary>
@@ -78,7 +95,7 @@ public class SpawnManager : Singleton<SpawnManager>
 
         //Verifica se a quantidade de inimigos na lista é maior que 0
         //e o estado atual de jogo é GAME
-        if (enemiesToSpawn.Count > 0 && GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME))
+        if (enemiesToSpawn.Count > 0 && GameManager.Instance.IsCurrentGameState(GAMESTATES.GAME) && canSpawn)
             SpawnEnemy();
 
         //Executa a corotina novamente
@@ -98,6 +115,7 @@ public class SpawnManager : Singleton<SpawnManager>
         bool can = newSpawnLevel > spawnLevel ? true : false;
         if (can)
         {
+            SpawnBoss();
             //Coloca o novo level na variavel de de level atual
             spawnLevel = newSpawnLevel > spawnLevel ? newSpawnLevel : spawnLevel;
             //Reduz o tempo de spawn

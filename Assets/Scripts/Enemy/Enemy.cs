@@ -33,6 +33,12 @@ public abstract class Enemy : MonoBehaviour
     //Velocidade do inimigo
     public float speed;
 
+    public Vector2 size;
+
+    public float maxTriggerTime, triggerCooldown, maxAttackTime, attackCooldown;
+    protected float triggerTimer, attackTimer;
+    protected bool canTrigger, canAttack;
+
 
     // Use this for initialization
     protected void Start()
@@ -47,6 +53,14 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine(TriggerAttack());
         //Operação ternaria para ver se o hp é menor que 0, caso for muda para 1
         hp = hp <= 0 ? 1 : hp;
+
+        Bounds boundsAux = GetComponent<SpriteRenderer>().bounds;
+        size = new Vector2(boundsAux.max.x - boundsAux.min.x, boundsAux.max.y - boundsAux.min.y);
+
+        triggerTimer = 0;
+        canTrigger = true;
+        attackTimer = 0;
+        canAttack = true;
 
     }
     /// <summary>
@@ -67,7 +81,7 @@ public abstract class Enemy : MonoBehaviour
     /// Metodo para mudar o estado atual do inimigo
     /// </summary>
     /// <param name="newState"></param>
-    public void ChangeState(STATE newState)
+    public virtual void ChangeState(STATE newState)
     {
         CurrentState = newState;
     }
@@ -82,7 +96,17 @@ public abstract class Enemy : MonoBehaviour
             switch (CurrentState)
             {
                 case STATE.ATTACK:
+
+                    if (!canAttack) ChangeState(STATE.IDLE);
                     OnAttack();
+                    attackTimer += Time.deltaTime;
+                    if (attackTimer > maxAttackTime)
+                    {
+                        StartCoroutine(AttackCooldownCoroutine());
+                        ChangeState(STATE.IDLE);
+                        attackTimer = 0;
+                    }
+
                     break;
                 case STATE.IDLE:
 
@@ -90,7 +114,15 @@ public abstract class Enemy : MonoBehaviour
 
                     break;
                 case STATE.TRIGGER:
+                    if (!canTrigger) ChangeState(STATE.IDLE);
                     OnTrigger();
+                    triggerTimer += Time.deltaTime;
+                    if (triggerTimer > maxTriggerTime)
+                    {
+                        StartCoroutine(TriggerCooldownCoroutine());
+                        ChangeState(STATE.IDLE);
+                        triggerTimer = 0;
+                    }
                     break;
             }
         }
@@ -101,8 +133,6 @@ public abstract class Enemy : MonoBehaviour
         //Caso a bala do jogador atinga o inimigo
         if (collision.tag == "PlayerBullet")
         {
-
-
 
 
             //Destroi a bala
@@ -135,6 +165,7 @@ public abstract class Enemy : MonoBehaviour
             //Verifica se o numero randomico é menor que a chance de mudar de estado
             if (rand <= attackChance)
             {
+
                 //Muda de estado para Attack
                 ChangeState(STATE.ATTACK);
             }
@@ -183,12 +214,34 @@ public abstract class Enemy : MonoBehaviour
         if (hp <= 0)
         {
             PowerupSpawner.Instance.SpawnPowerup(transform.position, spawnPowerupChance);
-
+            WhenDie();
             //Adiciona pontos na variavel Score do GameManager
             SoundManager.Instance.PlaySfx("explosion1");
             GameManager.Instance.AddScore(points);
             Destroy(this.gameObject);
         }
+    }
+
+    protected IEnumerator TriggerCooldownCoroutine()
+    {
+        canTrigger = false;
+
+        yield return new WaitForSeconds(triggerCooldown);
+
+        canTrigger = true;
+    }
+    protected IEnumerator AttackCooldownCoroutine()
+    {
+        canAttack = false;
+
+        yield return new WaitForSeconds(triggerCooldown);
+
+        canAttack = true;
+    }
+
+    public virtual void WhenDie()
+    {
+        //morreu
     }
 
 }
