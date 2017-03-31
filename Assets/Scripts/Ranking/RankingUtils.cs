@@ -242,4 +242,12 @@ public class RankingUtils
         return score > scoreList[4].Score;
     }
 
+    public static void ResetRanking()
+    {
+        if (File.Exists(GetRankingPath()))
+        {
+            File.Delete(GetRankingPath());
+        }
+    }
+
 }
