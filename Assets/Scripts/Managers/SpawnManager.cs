@@ -126,6 +126,10 @@ public class SpawnManager : Singleton<SpawnManager>
             spawnLevelText.text = spawnLevelConstString + spawnLevel;
             //Executa o som de passar de level
             SoundManager.Instance.PlaySfx("Dif_Up");
+            if (spawnLevel % 2 == 0)
+            {
+                GameManager.instance.player.hp++;
+            }
 
         }
 

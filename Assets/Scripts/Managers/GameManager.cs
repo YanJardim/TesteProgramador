@@ -40,6 +40,7 @@ public class GameManager : Singleton<GameManager>
             case GAMESTATES.GAME:
                 Time.timeScale = 1;
                 scoreText.text = constScoreText + score;
+
                 break;
             case GAMESTATES.PAUSE:
 
